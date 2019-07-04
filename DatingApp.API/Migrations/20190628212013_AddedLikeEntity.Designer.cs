@@ -3,14 +3,16 @@ using System;
 using DatingApp.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190628212013_AddedLikeEntity")]
+    partial class AddedLikeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,7 @@ namespace DatingApp.API.Migrations
                     b.Property<int>("LikerId");
 
                     b.Property<int>("LikeeId");
+
 
                     b.HasKey("LikerId", "LikeeId");
 
@@ -103,15 +106,14 @@ namespace DatingApp.API.Migrations
 
             modelBuilder.Entity("DatingApp.API.Models.Like", b =>
                 {
-                    b.HasOne("DatingApp.API.Models.User", "Likee")
-                        .WithMany("Likers")
+                    b.HasOne("DatingApp.API.Models.User", "Liker")
+                        .WithMany("Likees")
                         .HasForeignKey("LikeeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("DatingApp.API.Models.User", "Liker")
-                        .WithMany("Likees")
-                        .HasForeignKey("LikerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("DatingApp.API.Models.User", "Likee")
+                        .WithMany("Likers")
+                        .HasForeignKey("LikeeId1");
                 });
 
             modelBuilder.Entity("DatingApp.API.Models.Photo", b =>
